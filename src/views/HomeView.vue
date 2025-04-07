@@ -1,9 +1,14 @@
 <template>
   <div class="home" :class="{'bg-danger': showAlert, 'bg-default': !showAlert}">
-    <div class="error bg-danger" v-if="error">
+    <div class="error bg-danger" v-if="!error">
       Errore nella richiesta!
     </div>
     <SettingsComponent/>
+    <button
+        style="position:absolute; z-index: 10; right:10rem; top:1rem; background-color: transparent; border: none; color: white"
+        @click="goFullscreen">
+      <i class="fa-solid  fa-3x fa-up-right-and-down-left-from-center"></i>
+    </button>
     <button
         style="position:absolute; z-index: 10; right:6rem; top:1rem; background-color: transparent; border: none; color: white"
         @click="forceFetchData">
@@ -18,6 +23,7 @@
 </template>
 <style scoped>
 #main {
+  padding-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -96,6 +102,22 @@ const forceFetchData = () => {
   alert('Richiesta aggiornamento dati inviata')
 }
 
+
+const goFullscreen = () => {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    console.log('richiesta fullscreen std')
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { // Safari/older Android
+    console.log('richiesta fullscreen old')
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    console.log('richiesta fullscreen webkit')
+    elem.msRequestFullscreen();
+  }else{
+    console.error('Error nella richiesta di fullscreen');
+  }
+}
 
 const fetchData = async () => {
 

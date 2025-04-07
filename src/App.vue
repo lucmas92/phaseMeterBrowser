@@ -3,23 +3,6 @@
     <router-view/>
   </div>
 </template>
-<script setup>
-import {onMounted} from "vue";
-
-onMounted(() => {
-  goFullscreen()
-})
-const goFullscreen = () => {
-  const elem = document.documentElement;
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { // Safari/older Android
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) {
-    elem.msRequestFullscreen();
-  }
-}
-</script>
 
 <style>
 html, body {
