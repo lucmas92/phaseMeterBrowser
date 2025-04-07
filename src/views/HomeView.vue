@@ -92,7 +92,6 @@ const fetchData = async () => {
   // URL reale dell'API che vuoi chiamare
   const targetUrl = store.getters.url
 
-  const url = `${proxyUrl}${targetUrl}`
   const url = '/.netlify/functions/proxy'
 
   let data = {}
