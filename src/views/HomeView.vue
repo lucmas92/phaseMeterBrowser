@@ -122,13 +122,10 @@ const showInfo = (text) => {
 const goFullscreen = () => {
   const elem = document.documentElement;
   if (elem.requestFullscreen) {
-    alert('richiesta fullscreen std')
     elem.requestFullscreen();
   } else if (elem.webkitRequestFullscreen) { // Safari/older Android
-    alert('richiesta fullscreen old')
     elem.webkitRequestFullscreen();
   } else if (elem.msRequestFullscreen) {
-    alert('richiesta fullscreen webkit')
     elem.msRequestFullscreen();
   } else {
     console.error('Error nella richiesta di fullscreen');
@@ -153,64 +150,13 @@ const fetchData = async () => {
       }
     })
 
-    // if (!response.ok) {
-    //   error.value = true
-    //   throw new Error('Errore nella richiesta')
-    // }
+    if (!response.ok) {
+      error.value = true
+      throw new Error('Errore nella richiesta')
+    }
     error.value = false
 
-    // data = await response.json()
-    data = {
-      "connected": true,
-      "connectedCode": "CONNECTED",
-      "support": 65535,
-      "currency": "EUR",
-      "pricePerUnit": 0.25,
-      "totalCost": 25200.43,
-      "phases": [{
-        "number": 1,
-        "frequency": 49.95,
-        "voltage": 218.59,
-        "current": 2.877,
-        "powerActive": 598.66272,
-        "powerReactive": 44.20336,
-        "powerApparent": 616.7572,
-        "powerFactor": 0.968,
-        "phaseAngle": 4.5,
-        "totalForwardActiveEnergy": 29234.01958,
-        "totalReverseActiveEnergy": 0.06848,
-        "totalForwardReactiveEnergy": 7249.51144,
-        "totalReverseReactiveEnergy": 19.56792
-      }, {
-        "number": 2,
-        "frequency": 49.95,
-        "voltage": 226.59,
-        "current": 12.623,
-        "powerActive": 2803.39416,
-        "powerReactive": -65.13248,
-        "powerApparent": 2804.33542,
-        "powerFactor": 0.998,
-        "phaseAngle": -1.5,
-        "totalForwardActiveEnergy": 29273.50348,
-        "totalReverseActiveEnergy": 0.09814,
-        "totalForwardReactiveEnergy": 533.4208,
-        "totalReverseReactiveEnergy": 1324.1807
-      }, {
-        "number": 3,
-        "frequency": 49.95,
-        "voltage": 224.02,
-        "current": 7.12,
-        "powerActive": 1481.37692,
-        "powerReactive": 397.27526,
-        "powerApparent": 1563.77158,
-        "powerFactor": 0.947,
-        "phaseAngle": 15.2,
-        "totalForwardActiveEnergy": 42294.21286,
-        "totalReverseActiveEnergy": 0.07246,
-        "totalForwardReactiveEnergy": 8771.6477,
-        "totalReverseReactiveEnergy": 32.92762
-      }]
-    }
+    data = await response.json()
 
     chartData.value = [
       data.phases[0].powerActive,
