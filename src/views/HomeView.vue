@@ -80,6 +80,7 @@ onBeforeUnmount(() => {
 
 const forceFetchData = async () => {
   await fetchData()
+  alert('Dati aggiornati')
 }
 
 
