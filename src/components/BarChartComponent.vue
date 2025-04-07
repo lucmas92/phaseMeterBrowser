@@ -1,6 +1,6 @@
 <template>
   <div id="barchart">
-    <BarChart :width="300" :options="chartOptions" :chartData="chartData"/>
+    <BarChart :height="300" :width="300" :options="chartOptions" :chartData="chartData"/>
   </div>
 </template>
 <style scoped>

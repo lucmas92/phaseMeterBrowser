@@ -1,7 +1,15 @@
 // netlify/functions/proxy.js
 
 export async function handler(event, context) {
-  const url = 'https://svr78.supla.org/direct/927/jW53MRbcodQwZj/read?format=json'; // cambia con l'URL reale
+  // const url = 'https://svr78.supla.org/direct/927/jW53MRbcodQwZj/read?format=json'; // cambia con l'URL reale
+  const { url } = event.queryStringParameters;
+
+  if (!url) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: 'Parametro "url" mancante' }),
+    };
+  }
 
   try {
     const response = await fetch(url);
