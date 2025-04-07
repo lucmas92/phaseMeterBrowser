@@ -1,5 +1,8 @@
 <template>
   <div class="home" :class="{'bg-danger': showAlert, 'bg-default': !showAlert}">
+    <div class="error bg-danger" v-if="error">
+      Errore nella richiesta!
+    </div>
     <SettingsComponent/>
     <button
         style="position:absolute; z-index: 10; right:6rem; top:1rem; background-color: transparent; border: none; color: white"
@@ -26,7 +29,16 @@
     margin-top: 3rem
   }
 }
-
+.error{
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem 0 1rem 0;
+  width: 100vw;
+  z-index: 99;
+  color: white;
+  font-weight: bold;
+}
 .bg-danger {
   background-color: red;
 }
@@ -46,6 +58,7 @@ import OfflineAlertComponent from "@/components/OfflineAlertComponent.vue";
 
 const chartData = ref([])
 const interval = ref(null);
+const error = ref(false);
 const total = ref(0);
 const store = useStore()
 const intervalTime = ref(20000)
@@ -103,8 +116,10 @@ const fetchData = async () => {
     })
 
     if (!response.ok) {
+      error.value = true
       throw new Error('Errore nella richiesta')
     }
+    error.value = false
 
     data = await response.json()
 
