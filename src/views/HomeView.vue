@@ -33,9 +33,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  padding: 1rem 0 1rem 0;
+  padding: 1.4rem 0 1.4rem 0;
   width: 100vw;
-  z-index: 99;
+  z-index: 0;
   color: white;
   font-weight: bold;
 }
@@ -91,9 +91,9 @@ onBeforeUnmount(() => {
   clearInterval(interval.value)
 })
 
-const forceFetchData = async () => {
-  await fetchData()
-  alert('Dati aggiornati')
+const forceFetchData = () => {
+  fetchData()
+  alert('Richiesta aggiornamento dati inviata')
 }
 
 
