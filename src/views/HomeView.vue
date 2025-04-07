@@ -86,10 +86,6 @@ watch(() => store.getters.interval, async function (v) {
 });
 
 onMounted(async () => {
-
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      alert(`Screen size is: ${width}x${height}`);
   await fetchData()
   interval.value = setInterval(async () => {
     await fetchData()
@@ -120,6 +116,10 @@ const goFullscreen = () => {
   }else{
     console.error('Error nella richiesta di fullscreen');
   }
+
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  alert(`Screen size is: ${width}x${height}`);
 }
 
 const fetchData = async () => {
