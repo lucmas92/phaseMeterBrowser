@@ -1,7 +1,10 @@
 <template>
   <div class="home" :class="{'bg-danger': showAlert, 'bg-default': !showAlert}">
-    <div class="error bg-danger" v-if="error">
+    <div class="banner error bg-danger" v-if="error">
       Errore nella richiesta!
+    </div>
+    <div class="banner bg-info" v-if="info">
+      {{ info }}
     </div>
     <SettingsComponent/>
     <button
@@ -35,7 +38,13 @@
     margin-top: 3rem
   }
 }
-.error{
+
+.bg-info{
+  z-index: 99 !important;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.banner {
   position: absolute;
   top: 0;
   left: 0;
@@ -45,6 +54,7 @@
   color: white;
   font-weight: bold;
 }
+
 .bg-danger {
   background-color: red;
 }
@@ -64,6 +74,7 @@ import OfflineAlertComponent from "@/components/OfflineAlertComponent.vue";
 
 const chartData = ref([])
 const interval = ref(null);
+const info = ref('');
 const error = ref(false);
 const total = ref(0);
 const store = useStore()
@@ -98,28 +109,30 @@ onBeforeUnmount(() => {
 
 const forceFetchData = () => {
   fetchData()
-  alert('Richiesta aggiornamento dati inviata')
+  showInfo('Richiesta aggiornamento dati inviata')
 }
 
+const showInfo = (text) => {
+  info.value = text
+  setTimeout(() => {
+    info.value = ''
+  }, 3000)
+}
 
 const goFullscreen = () => {
   const elem = document.documentElement;
   if (elem.requestFullscreen) {
-    console.log('richiesta fullscreen std')
+    alert('richiesta fullscreen std')
     elem.requestFullscreen();
   } else if (elem.webkitRequestFullscreen) { // Safari/older Android
-    console.log('richiesta fullscreen old')
+    alert('richiesta fullscreen old')
     elem.webkitRequestFullscreen();
   } else if (elem.msRequestFullscreen) {
-    console.log('richiesta fullscreen webkit')
+    alert('richiesta fullscreen webkit')
     elem.msRequestFullscreen();
-  }else{
+  } else {
     console.error('Error nella richiesta di fullscreen');
   }
-
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  alert(`Screen size is: ${width}x${height}`);
 }
 
 const fetchData = async () => {
@@ -140,13 +153,64 @@ const fetchData = async () => {
       }
     })
 
-    if (!response.ok) {
-      error.value = true
-      throw new Error('Errore nella richiesta')
-    }
+    // if (!response.ok) {
+    //   error.value = true
+    //   throw new Error('Errore nella richiesta')
+    // }
     error.value = false
 
-    data = await response.json()
+    // data = await response.json()
+    data = {
+      "connected": true,
+      "connectedCode": "CONNECTED",
+      "support": 65535,
+      "currency": "EUR",
+      "pricePerUnit": 0.25,
+      "totalCost": 25200.43,
+      "phases": [{
+        "number": 1,
+        "frequency": 49.95,
+        "voltage": 218.59,
+        "current": 2.877,
+        "powerActive": 598.66272,
+        "powerReactive": 44.20336,
+        "powerApparent": 616.7572,
+        "powerFactor": 0.968,
+        "phaseAngle": 4.5,
+        "totalForwardActiveEnergy": 29234.01958,
+        "totalReverseActiveEnergy": 0.06848,
+        "totalForwardReactiveEnergy": 7249.51144,
+        "totalReverseReactiveEnergy": 19.56792
+      }, {
+        "number": 2,
+        "frequency": 49.95,
+        "voltage": 226.59,
+        "current": 12.623,
+        "powerActive": 2803.39416,
+        "powerReactive": -65.13248,
+        "powerApparent": 2804.33542,
+        "powerFactor": 0.998,
+        "phaseAngle": -1.5,
+        "totalForwardActiveEnergy": 29273.50348,
+        "totalReverseActiveEnergy": 0.09814,
+        "totalForwardReactiveEnergy": 533.4208,
+        "totalReverseReactiveEnergy": 1324.1807
+      }, {
+        "number": 3,
+        "frequency": 49.95,
+        "voltage": 224.02,
+        "current": 7.12,
+        "powerActive": 1481.37692,
+        "powerReactive": 397.27526,
+        "powerApparent": 1563.77158,
+        "powerFactor": 0.947,
+        "phaseAngle": 15.2,
+        "totalForwardActiveEnergy": 42294.21286,
+        "totalReverseActiveEnergy": 0.07246,
+        "totalForwardReactiveEnergy": 8771.6477,
+        "totalReverseReactiveEnergy": 32.92762
+      }]
+    }
 
     chartData.value = [
       data.phases[0].powerActive,
