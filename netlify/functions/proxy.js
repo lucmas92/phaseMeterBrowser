@@ -1,6 +1,8 @@
 // netlify/functions/proxy.js
 
 export async function handler(event, context) {
+  console.log('--- proxy event', event)
+  console.log('--- proxy context', context)
   // const url = 'https://svr78.supla.org/direct/927/jW53MRbcodQwZj/read?format=json'; // cambia con l'URL reale
   const { url } = event.queryStringParameters;
 

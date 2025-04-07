@@ -86,10 +86,6 @@ const forceFetchData = async () => {
 
 const fetchData = async () => {
 
-  // URL del servizio proxy
-  const proxyUrl = 'https://thingproxy.freeboard.io/fetch/'
-
-
   // URL reale dell'API che vuoi chiamare
   const targetUrl = store.getters.url
 
