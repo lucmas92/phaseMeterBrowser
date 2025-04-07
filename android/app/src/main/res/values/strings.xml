@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">phasemeter</string>
+    <string name="title_activity_main">phasemeter</string>
+    <string name="package_name">it.phasemeter.com</string>
+    <string name="custom_url_scheme">it.phasemeter.com</string>
+</resources>
