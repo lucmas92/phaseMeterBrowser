@@ -1,6 +1,6 @@
 <template>
   <div class="home" :class="{'bg-danger': showAlert, 'bg-default': !showAlert}">
-    <div class="error bg-danger" v-if="!error">
+    <div class="error bg-danger" v-if="error">
       Errore nella richiesta!
     </div>
     <SettingsComponent/>
@@ -87,6 +87,9 @@ watch(() => store.getters.interval, async function (v) {
 
 onMounted(async () => {
 
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      alert(`Screen size is: ${width}x${height}`);
   await fetchData()
   interval.value = setInterval(async () => {
     await fetchData()
